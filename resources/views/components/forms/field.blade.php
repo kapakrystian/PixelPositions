@@ -1,17 +1,13 @@
 @props(['label', 'name'])
 
-@php
-    $defaults = [
-        'type' => 'checkbox',
-        'id' => $name,
-        'name' => $name,
-        'value' => old($name),
-    ];
-@endphp
+<div>
+    @if ($label)
+        <x-forms.label :$name :$label />
+    @endif
 
-<x-forms.field :$label :$name>
-    <div class="rounded-xl bg-white/10 border border-white/10 px-5 py-4 w-full">
-        <input {{ $attributes($defaults) }}>
-        <span class="pl-1">{{ $label }}</span>
+    <div class="mt-1">
+        {{ $slot }}
+
+        <x-forms.error :error="$errors->first($name)" />
     </div>
-</x-forms.field>
+</div>
