@@ -5,15 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Models\Tag;
 
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        /**
+         * Group all of the elements from job table by featured value
+         * and safe them into two different table in one nested array.
+         */
+        $jobs = Job::all()->groupBy('featured');
+
+        /**
+         * First item in nested table is unfeatured jobs, the second is featured.
+         */
+        return view('jobs.index', [
+            'featuredJobs' => $jobs[1],
+            'jobs' => $jobs[0],
+            'tags' => Tag::all()
+        ]);
     }
 
     /**
