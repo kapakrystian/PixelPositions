@@ -11,7 +11,10 @@ class SearchController extends Controller
         /**
          * In job table search all of jobs which have got a 'q' value in their title.
          */
-        $jobs = Job::where('title', 'LIKE', '%' . request('q') . '%')->get();
+        $jobs = Job::query()
+            ->with(['employer', 'tags'])
+            ->where('title', 'LIKE', '%' . request('q') . '%')
+            ->get();
 
         return view('results', ['jobs' => $jobs]);
     }

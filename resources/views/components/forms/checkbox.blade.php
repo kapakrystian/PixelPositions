@@ -1,7 +1,7 @@
 @props(['label', 'name'])
 
 @php
-    $default = [
+    $defaults = [
         'type' => 'checkbox',
         'id' => $name,
         'name' => $name,
